@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Filiz ♥ Umutcan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #1a0a0c;
+      --bg2: #2b0f14;
+      --accent: #8b1e2d;
+      --accent-soft: #a83a4a;
+      --gold: #e8c9a0;
+      --cream: #f5e6d3;
+      --text: #f8efe6;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .slides {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.7s ease, visibility 0.7s ease, transform 0.7s ease;
+      transform: scale(0.97);
+      padding: 20px;
+      overflow: hidden;
+      background: radial-gradient(ellipse at center, var(--bg2) 0%, var(--bg) 70%);
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+      z-index: 10;
+    }
+
+    /* Floating hearts */
+    .hearts {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -40px;
+      font-size: 18px;
+      color: rgba(168, 58, 74, 0.35);
+      animation: floatUp linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.5; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Multi language love page */
+    .love-cloud {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .love-text {
+      position: absolute;
+      color: rgba(232, 201, 160, 0.18);
+      font-size: clamp(12px, 2.2vw, 18px);
+      white-space: nowrap;
+      animation: drift 25s linear infinite;
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    @keyframes drift {
+      0% { transform: translateX(-20px); opacity: 0; }
+      10% { opacity: 0.25; }
+      90% { opacity: 0.2; }
+      100% { transform: translateX(20px); opacity: 0; }
+    }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 5;
+      text-align: center;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 600;
+      font-size: clamp(2rem, 6vw, 3.8rem);
+      color: var(--cream);
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+
+    h2 {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.4rem, 8vw, 4.5rem);
+      color: var(--gold);
+      margin: 10px 0 20px;
+      text-shadow: 0 3px 15px rgba(0,0,0,0.3);
+    }
+
+    .subtitle {
+      font-size: clamp(1.1rem, 3vw, 1.5rem);
+      color: var(--gold);
+      opacity: 0.9;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+
+    .names {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 4vw, 2.2rem);
+      color: var(--cream);
+      margin: 20px 0;
+    }
+
+    .counter {
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      color: var(--gold);
+      margin: 25px 0;
+      line-height: 1.5;
+    }
+
+    .counter span {
+      display: inline-block;
+      min-width: 1.6em;
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    /* Photo slides */
+    .photo-wrap {
+      position: relative;
+      width: min(92vw, 480px);
+      max-height: 70vh;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.55), 0 0 0 1px rgba(232,201,160,0.15);
+    }
+
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      max-height: 70vh;
+    }
+
+    .caption {
+      margin-top: 22px;
+      font-size: clamp(1.15rem, 3.2vw, 1.45rem);
+      color: var(--cream);
+      font-style: italic;
+      max-width: 480px;
+      line-height: 1.45;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    /* Song */
+    .song-card {
+      background: rgba(43, 15, 20, 0.75);
+      border: 1px solid rgba(232, 201, 160, 0.2);
+      border-radius: 20px;
+      padding: 30px 24px;
+      max-width: 420px;
+      width: 100%;
+      backdrop-filter: blur(8px);
+    }
+
+    .song-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--cream);
+      margin-bottom: 6px;
+    }
+
+    .song-artist {
+      color: var(--gold);
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+
+    .play-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 25px rgba(139, 30, 45, 0.4);
+    }
+
+    .play-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(139, 30, 45, 0.55);
+    }
+
+    .play-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Note placeholder */
+    .note-box {
+      background: rgba(43, 15, 20, 0.75);
+      border: 1px solid rgba(232, 201, 160, 0.2);
+      border-radius: 18px;
+      padding: 26px 22px;
+      max-width: 620px;
+      width: 100%;
+      max-height: 68vh;
+      overflow-y: auto;
+      font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+      line-height: 1.75;
+      color: var(--cream);
+      text-align: left;
+      font-style: normal;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent-soft) transparent;
+    }
+
+    .note-box::-webkit-scrollbar {
+      width: 6px;
+    }
+    .note-box::-webkit-scrollbar-thumb {
+      background: var(--accent-soft);
+      border-radius: 10px;
+    }
+
+    .note-box p {
+      margin-bottom: 1.1em;
+    }
+
+    .note-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Closing */
+    .closing-text {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(2.8rem, 10vw, 5.5rem);
+      color: var(--gold);
+      text-shadow: 0 4px 25px rgba(0,0,0,0.4);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .final-hearts {
+      font-size: 2rem;
+      letter-spacing: 12px;
+      opacity: 0.7;
+      margin-top: 15px;
+    }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      z-index: 200;
+      pointer-events: none;
+    }
+
+    .nav button {
+      pointer-events: auto;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(232, 201, 160, 0.45);
+      background: rgba(26, 10, 12, 0.82);
+      color: var(--gold);
+      font-size: 1.4rem;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
+    }
+
+    .nav button:active {
+      background: rgba(139, 30, 45, 0.75);
+      border-color: var(--gold);
+      transform: scale(0.94);
+    }
+
+    .progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--gold));
+      z-index: 100;
+      transition: width 0.4s ease;
+    }
+
+    .hint {
+      position: fixed;
+      bottom: 95px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-size: 0.95rem;
+      color: rgba(232, 201, 160, 0.5);
+      z-index: 90;
+      letter-spacing: 1px;
+      pointer-events: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      .photo-wrap {
+        width: 92vw;
+        max-height: 58vh;
+      }
+      .caption {
+        font-size: 1.1rem;
+        padding: 0 8px;
+      }
+      .nav {
+        bottom: 20px;
+      }
+      .hint {
+        bottom: 78px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <div class="slides" id="slides">
+
+    <!-- 0: Opening -->
+    <section class="slide active" data-index="0">
+      <div class="hearts" id="hearts0"></div>
+      <div class="content">
+        <p class="subtitle">Doğum Günün Kutlu Olsun</p>
+        <h1>Filiz Kadıkıran</h1>
+        <p class="names">Umutcan ♥ Filiz</p>
+        <p style="margin-top:30px; font-size:1.15rem; opacity:0.75; letter-spacing:1px;">23 Eylül 2023’ten beri…</p>
+      </div>
+    </section>
+
+    <!-- 1: Time together -->
+    <section class="slide" data-index="1">
+      <div class="hearts" id="hearts1"></div>
+      <div class="content">
+        <h2>Birlikte</h2>
+        <div class="counter" id="counter">
+          <span id="years">0</span> yıl<br>
+          <span id="months">0</span> ay<br>
+          <span id="days">0</span> gün
+        </div>
+        <p style="margin-top:25px; font-size:1.2rem; color:var(--gold); opacity:0.85;">ve daha nicelerine…</p>
+      </div>
+    </section>
+
+    <!-- 2: Multi language I love you -->
+    <section class="slide" data-index="2">
+      <div class="love-cloud" id="loveCloud"></div>
+      <div class="content" style="z-index:5;">
+        <h2 style="font-size:clamp(2.2rem,7vw,3.8rem);">Seni Seviyorum</h2>
+        <p style="font-size:1.25rem; color:var(--cream); opacity:0.8; margin-top:10px;">100 dilde, her şekilde, her zaman</p>
+      </div>
+    </section>
+
+    <!-- Photo slides 3-13 -->
+    <section class="slide" data-index="3">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/01.jpg" alt="Biz"></div>
+        <p class="caption">“Dünyanın en güzel yerindeyim: senin yanındayım.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="4">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/02.jpg" alt="Biz"></div>
+        <p class="caption">“Bu suratını her gördüğümde kalbim eriyor.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="5">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/03.jpg" alt="Biz"></div>
+        <p class="caption">“Bazen dünya ters dönse de sen hep yerindesin.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="6">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/04.jpg" alt="Biz"></div>
+        <p class="caption">“Saçına dokunduğum her an, her şey yolunda demek.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="7">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/05.jpg" alt="Biz"></div>
+        <p class="caption">“Güneş batarken bile sen en parlak olanısın.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="8">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/06.jpg" alt="Biz"></div>
+        <p class="caption">“Tarihin yanında bile seninle olmak en güzel hatıra.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="9">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/07.jpg" alt="Biz"></div>
+        <p class="caption">“Doğanın ortasında bile en güzel manzara sensin.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="10">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/08.jpg" alt="Biz"></div>
+        <p class="caption">“Bu elbiseyle her adımın bir sahne gibi.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="11">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/09.jpg" alt="Biz"></div>
+        <p class="caption">“Güneş batarken bile gülüşün her şeyi aydınlatıyor.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="12">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/10.jpg" alt="Biz"></div>
+        <p class="caption">“Seni kucağıma aldığım her an, evde gibi hissediyorum.”</p>
+      </div>
+    </section>
+
+    <section class="slide" data-index="13">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="photo-wrap"><img src="photos/11.jpg" alt="Biz"></div>
+        <p class="caption">“Dünya ne kadar karmaşık olsa da seninle her şey yerli yerinde.”</p>
+      </div>
+    </section>
+
+    <!-- Song: Umutcan -->
+    <section class="slide" data-index="14">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="song-card">
+          <p style="font-size:0.95rem; letter-spacing:2px; color:var(--gold); margin-bottom:12px;">BENİM ŞARKIM</p>
+          <div class="song-title">Sen Benim Başıma Gelen En Güzel Şey</div>
+          <div class="song-artist">Koyu</div>
+          <button class="play-btn" onclick="playClip('koyu')">
+            ▶  Nakaratı Dinle (15 sn)
+          </button>
+          <div id="player-koyu" style="margin-top:18px; display:none;">
+            <iframe width="100%" height="90" src="https://www.youtube.com/embed/i6lXqifn5CU?start=48&enablejsapi=1" title="Koyu" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Song: Filiz -->
+    <section class="slide" data-index="15">
+      <div class="hearts"></div>
+      <div class="content">
+        <div class="song-card">
+          <p style="font-size:0.95rem; letter-spacing:2px; color:var(--gold); margin-bottom:12px;">SENİN ŞARKIN</p>
+          <div class="song-title">Sen Başkasın</div>
+          <div class="song-artist">Kum</div>
+          <button class="play-btn" onclick="playClip('kum')">
+            ▶  Nakaratı Dinle (15 sn)
+          </button>
+          <div id="player-kum" style="margin-top:18px; display:none;">
+            <iframe width="100%" height="90" src="https://www.youtube.com/embed/aMs2lW01EtI?start=22&enablejsapi=1" title="Kum" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Long note placeholder -->
+    <section class="slide" data-index="16">
+      <div class="hearts"></div>
+      <div class="content">
+        <h2 style="font-size:clamp(1.8rem,5.5vw,2.8rem); margin-bottom:18px;">Sana Notum</h2>
+        <div class="note-box" id="noteBox">
+          <p>Cilveli çingenime… ❤️</p>
+          <p>Benim güzel cilveli çingenim, nereden başlayacağımı bilmiyorum. Sana seni ne kadar sevdiğimi anlatmaya çalışsam muhtemelen yine benimle dalga geçerdin. 😂 Zaten seninle ciddi bir şey konuşmaya çalışmak bile ayrı bir macera. Bir bakıyorum birbirimize laf sokuyoruz, bir bakıyorum seni izlerken kendi kendime gülümsüyorum. Sonra da sanki hiçbir şey olmamış gibi yine seninle uğraşmaya devam ediyorum.</p>
+          <p>Ama biliyor musun, en sevdiğim şeylerden biri de tam olarak bu. Seninle çocuk gibi eğlenebilmek, saçma sapan şeylere gülebilmek, birbirimizle uğraşırken bile sevgimizi hissetmek… Herkesin göremediği, sadece bizim anlayabildiğimiz o küçük dünyamız var ya, işte ben en çok orayı seviyorum.</p>
+          <p>23 Eylül 2023’te başlayan hikâyemizin bugünlere geleceğini o gün ne kadar hayal ediyorduk bilmiyorum. Ama şimdi dönüp baktığımda, hayatımda olduğun için kendimi ne kadar şanslı hissettiğimi anlatamam. Sen benim sadece sevgilim olmadın. En yakın arkadaşım, huzurum, bazen sinirimin sebebi, çoğu zaman da sebepsiz yere gülümsememin nedeni oldun. Evet, bazen insanı çileden çıkarmakta üstüne yok, bunu da söylemeden geçemeyeceğim. Ama ne yapayım, benim cilveli çingenim de sensin, gönlümün sahibi de. ❤️</p>
+          <p>Seninle her şeyin kusursuz olmasına ihtiyacım yok. Her günümüz mükemmel geçsin, hiç tartışmayalım, hiç üzülmeyelim istemiyorum. Ben seninle gerçek bir hayat istiyorum. Bazen kahkahalarla güldüğümüz, bazen birbirimize trip attığımız, bazen hiçbir şey konuşmadan sarıldığımız, bazen de bütün dünyayı unutup sadece birbirimize baktığımız bir hayat…</p>
+          <p>Çünkü ben seni yalnızca her şey güzelken sevmek istemiyorum. Moralinin bozuk olduğu günlerde de yanında olmak, canın sıkkınken seni güldürmeye çalışmak, kendini yalnız hissettiğinde elini tutmak istiyorum. Her zaman doğru şeyi söyleyemeyebilirim, bazen seni kızdırabilirim, hatta bazen sırf seninle uğraşmak hoşuma gittiği için seni daha da sinir edebilirim. Ama bütün bunların arasında hiç değişmesini istemediğim bir şey var: Sana olan sevgim.</p>
+          <p>Ve bugün senin doğum günün… İyi ki doğmuşsun be benim güzel kızım. İyi ki bu dünyaya gelmişsin, iyi ki yollarımız kesişmiş, iyi ki 23 Eylül 2023’te bizim hikâyemiz başlamış. Seninle daha çekilecek binlerce fotoğrafımız, dinlenecek binlerce şarkımız, güleceğimiz milyonlarca saçma şeyimiz ve yaşayacağımız çok güzel günlerimiz olsun istiyorum.</p>
+          <p>Bir gün yıllar sonra bugünkü fotoğraflarımıza bakıp birbirimize gülelim istiyorum. Belki o zaman da seninle uğraşırım, sen de bana laf yetiştirirsin. Belki yine sana cilveli çingenim derim ve sen yine bana o kendine has bakışını atarsın. Ama umarım içimizden ikimiz de aynı şeyi geçiririz: İyi ki birbirimizi bulmuşuz.</p>
+          <p>Sana verebileceğim en büyük söz, her şeyin hep kolay olacağı değil. Ne olursa olsun, sevgimizi korumak, birbirimizi anlamaya çalışmak ve birlikte daha güzel yarınlar kurmak için çabalamak istiyorum.</p>
+          <p>Bugün herkes sana doğum günü hediyeleri verebilir. Ben ise sana bu küçük sayfayı bırakmak istedim. Çünkü burada sadece fotoğraflarımız ya da şarkılarımız yok. Burada benim sana anlatmak istediklerim, birlikte geçirdiğimiz zaman ve daha yaşamadığımız nice güzel günün hayali var.</p>
+          <p>İyi ki doğdun benim cilveli çingenim. İyi ki benim hayatımdasın. İyi ki benimle gülüyorsun, benimle uğraşıyorsun ve benim hikâyemin en güzel yerinde sen varsın.</p>
+          <p>Seni bazen sinir edecek kadar çok seviyorum, bazen kelimelere sığdıramayacak kadar çok seviyorum. Ama en çok da sen olduğun için seviyorum.</p>
+          <p>İyi ki sen. İyi ki biz. Seni çok seviyorum, benim güzel çingenim. ❤️</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Closing -->
+    <section class="slide" data-index="17">
+      <div class="hearts"></div>
+      <div class="content">
+        <p class="closing-text">Seni çok<br>seviyorum<br>sevgilim</p>
+        <div class="final-hearts">♥ ♥ ♥</div>
+        <p style="margin-top:30px; font-size:1.15rem; color:var(--cream); opacity:0.75;">Umutcan</p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="hint" id="hint">Ekrana dokun veya okları kullan</div>
+
+  <div class="nav">
+    <button id="prevBtn" aria-label="Önceki">←</button>
+    <button id="nextBtn" aria-label="Sonraki">→</button>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    let current = 0;
+    const progress = document.getElementById('progress');
+    const hint = document.getElementById('hint');
+
+    function goTo(index) {
+      if (index < 0 || index >= total) return;
+      slides[current].classList.remove('active');
+      current = index;
+      slides[current].classList.add('active');
+      progress.style.width = ((current + 1) / total * 100) + '%';
+      if (current === 0) hint.style.opacity = '1';
+      else hint.style.opacity = '0';
+      // generate hearts for visible slide if needed
+      createHearts(slides[current]);
+    }
+
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+
+    function nextSlide(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      goTo(current + 1);
+    }
+    function prevSlide(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      goTo(current - 1);
+    }
+
+    nextBtn.addEventListener('click', nextSlide);
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('touchend', nextSlide);
+    prevBtn.addEventListener('touchend', prevSlide);
+
+    // Click / tap anywhere to next (except buttons and interactive elements)
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('button') || e.target.closest('iframe') || e.target.closest('.play-btn') || e.target.closest('.note-box')) return;
+      if (current < total - 1) goTo(current + 1);
+    });
+
+    // Keyboard
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        goTo(current + 1);
+      }
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        goTo(current - 1);
+      }
+    });
+
+    // Touch swipe
+    let touchStartX = 0;
+    let touchStartY = 0;
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+      touchStartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    document.addEventListener('touchend', e => {
+      if (e.target.closest('button') || e.target.closest('.note-box')) return;
+      const diffX = e.changedTouches[0].screenX - touchStartX;
+      const diffY = e.changedTouches[0].screenY - touchStartY;
+      // Only horizontal swipes
+      if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY)) {
+        if (diffX < 0) goTo(current + 1);
+        else goTo(current - 1);
+      }
+    }, { passive: true });
+
+    // Counter
+    function updateCounter() {
+      const start = new Date(2023, 8, 23); // 23 Sep 2023
+      const now = new Date();
+      let years = now.getFullYear() - start.getFullYear();
+      let months = now.getMonth() - start.getMonth();
+      let days = now.getDate() - start.getDate();
+
+      if (days < 0) {
+        months--;
+        const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+        days += prevMonth.getDate();
+      }
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+
+      document.getElementById('years').textContent = years;
+      document.getElementById('months').textContent = months;
+      document.getElementById('days').textContent = days;
+    }
+    updateCounter();
+
+    // Hearts
+    function createHearts(slide) {
+      const container = slide.querySelector('.hearts');
+      if (!container || container.dataset.filled) return;
+      container.dataset.filled = '1';
+      for (let i = 0; i < 18; i++) {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.textContent = '♥';
+        h.style.left = Math.random() * 100 + '%';
+        h.style.fontSize = (14 + Math.random() * 16) + 'px';
+        h.style.animationDuration = (8 + Math.random() * 12) + 's';
+        h.style.animationDelay = (Math.random() * 8) + 's';
+        container.appendChild(h);
+      }
+    }
+
+    // Initial hearts
+    createHearts(slides[0]);
+
+    // Love languages cloud
+    const languages = [
+      "Seni seviyorum", "I love you", "Je t'aime", "Te amo", "Ich liebe dich",
+      "Ti amo", "Eu te amo", "Я тебя люблю", "我爱你", "愛してる",
+      "사랑해", "أحبك", "Σ’αγαπώ", "Kocham cię", "Szeretlek",
+      "Jag älskar dig", "Jeg elsker deg", "Ik hou van jou", "Te iubesc", "Volim te",
+      "Miluji tě", "Aishiteru", "Mahal kita", "Nakupenda", "Saranghae",
+      "Wo ai ni", "Ana behibek", "S'agapo", "Te quiero", "Aloha wau ia oe",
+      "Dustat daram", "Main tumse pyar karta hoon", "Ami tomake bhalobasi",
+      "Chan rak khun", "Anh yêu em", "Aku cinta kamu", "Maite zaitut",
+      "Rwy'n dy garu di", "Is tú mo ghrá", "Ég elska þig", "Minä rakastan sinua",
+      "Te sakam", "Ljubim te", "Obicham te", "Ya tebe kokhayu", "Dooset daram",
+      "Seni çok seviyorum", "Forever yours", "Mon amour", "Mi amor", "Meine Liebe"
+    ];
+
+    const cloud = document.getElementById('loveCloud');
+    languages.forEach((txt, i) => {
+      const el = document.createElement('div');
+      el.className = 'love-text';
+      el.textContent = txt;
+      el.style.top = (Math.random() * 90) + '%';
+      el.style.left = (Math.random() * 80) + '%';
+      el.style.animationDelay = (Math.random() * 15) + 's';
+      el.style.animationDuration = (18 + Math.random() * 15) + 's';
+      el.style.fontSize = (11 + Math.random() * 10) + 'px';
+      cloud.appendChild(el);
+    });
+
+    // Song players (simple show)
+    function playClip(which) {
+      const id = which === 'koyu' ? 'player-koyu' : 'player-kum';
+      const el = document.getElementById(id);
+      el.style.display = 'block';
+    }
+
+    // Hide hint after first interaction
+    setTimeout(() => {
+      if (current === 0) hint.style.transition = 'opacity 1s';
+    }, 4000);
+  </script>
+</body>
+</html>
